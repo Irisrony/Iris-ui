@@ -2,7 +2,10 @@
   <div>
     这里是首页
   </div>
-  <div class="ButtonList">
+  <!-- 对话框区域 -->
+  <IrisDialog></IrisDialog>
+  <!-- 按钮区域 -->
+  <!-- <div class="ButtonList">
     <IrisButton type="primary">111</IrisButton>
     <IrisButton type="success">111</IrisButton>
     <IrisButton type="info">222</IrisButton>
@@ -49,11 +52,12 @@
     <IrisButton disabled circle icon="iris-icon-check" plain type="warning"></IrisButton>
     <IrisButton disabled circle icon="iris-icon-delete" plain type="danger"></IrisButton>
     <IrisButton disabled circle icon="" plain></IrisButton>
-  </div>
+  </div> -->
 </template>
 
 <script setup lang='ts'>
 import IrisButton from './components/IrisButton.vue';
+import IrisDialog from './components/IrisDialog.vue';
 
 const btnClick = (e: string) => {
   console.log(e);
