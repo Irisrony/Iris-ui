@@ -2,14 +2,15 @@
   <div>
     这里是首页
   </div>
+  <IrisFlipCard></IrisFlipCard>
   <!-- 对话框区域 -->
-  <IrisDialog title="首页标题">
+  <!-- <IrisDialog title="首页标题">
     <template #title>
       <h3>
         我是标题
       </h3>
     </template>
-  </IrisDialog>
+  </IrisDialog> -->
   <!-- 按钮区域 -->
   <!-- <div class="ButtonList">
     <IrisButton type="primary">111</IrisButton>
@@ -64,6 +65,7 @@
 <script setup lang='ts'>
 import IrisButton from './components/IrisButton.vue';
 import IrisDialog from './components/IrisDialog.vue';
+import IrisFlipCard from './components/IrisFlipCard.vue';
 
 const btnClick = (e: string) => {
   console.log(e);
