@@ -3,7 +3,13 @@
     这里是首页
   </div>
   <!-- 对话框区域 -->
-  <IrisDialog></IrisDialog>
+  <IrisDialog title="首页标题">
+    <template #title>
+      <h3>
+        我是标题
+      </h3>
+    </template>
+  </IrisDialog>
   <!-- 按钮区域 -->
   <!-- <div class="ButtonList">
     <IrisButton type="primary">111</IrisButton>
