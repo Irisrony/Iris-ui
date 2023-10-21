@@ -7,7 +7,6 @@
 
 <script setup lang='ts'>
 import IrisClock from './components/IrisClock.vue';
-import IrisFlipCard from './components/IrisFlipCard.vue';
 </script>
 
 <style scoped>
