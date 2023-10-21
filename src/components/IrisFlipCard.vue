@@ -1,13 +1,9 @@
 <template>
     <div class="iris-flipcard">
-        <div class="flipcard-item card1"></div>
-        <div class="flipcard-item card2"></div>
-        <div class="flipcard-item card3">{{ props.num }}</div>
-        <div class="flipcard-item card4">{{ props.num }}</div>
-    </div>
-    <div class="btnController">
-        <button id="btnUp" @click="flip(1)">向上翻转</button>
-        <button id="btnDown" @click="flip(-1)">向下翻转</button>
+        <div class="flipcard-item card1" ref="card1"></div>
+        <div class="flipcard-item card2" ref="card2"></div>
+        <div class="flipcard-item card3" ref="card3">{{ props.num }}</div>
+        <div class="flipcard-item card4" ref="card4">{{ props.num }}</div>
     </div>
 </template>
 
@@ -20,47 +16,57 @@ type TData = {
 }
 
 const props = withDefaults(defineProps<TData>(),{
-    num: 9,
+    num: 0,
     duration: 600
 })
 
 const isFlipping = ref(false)
 
-const flip = (direction : number) => {
+const card1 = ref()
+const card2 = ref()
+const card3 = ref()
+const card4 = ref()
+
+const setFrontNum = (num: number) => {
+    card4!.value.innerHTML = card3!.value.innerHTML = "" + num
+}
+
+const flip = (nextNum: number) => {
+
     if(isFlipping.value){
         return
     }
-    const card1 = document.querySelector('.card1')
-    const card2 = document.querySelector('.card2')
-    const card3 = document.querySelector('.card3')
-    const card4 = document.querySelector('.card4')
 
     // 设置底下的数字
-    const  curNum = Number.parseInt(card3!.innerHTML)
-    const  nextNum = (curNum + direction + 10) % 10
-    card1!.innerHTML = card2!.innerHTML = "" + nextNum
+    card1!.value.innerHTML = card2!.value.innerHTML = "" + nextNum
 
     // 设置动画
-    card2!.setAttribute('class','flipcard-item card2 card2FlipUp')
-    card3!.setAttribute('class','flipcard-item card3 card3FlipUp')
+    card2!.value.setAttribute('class','flipcard-item card2 card2FlipUp')
+    card3!.value.setAttribute('class','flipcard-item card3 card3FlipUp')
 
     isFlipping.value = true
 
     setTimeout(()=>{
         // 清除动画
-        card2!.setAttribute('class','flipcard-item card2')
-        card3!.setAttribute('class','flipcard-item card3')
+        card2!.value.setAttribute('class','flipcard-item card2')
+        card3!.value.setAttribute('class','flipcard-item card3')
         // 更新顶部的数字
-        card4!.innerHTML = card3!.innerHTML = "" + nextNum
+        setFrontNum(nextNum)
         isFlipping.value = false
     },props.duration)
     
 }
 
+defineExpose({
+    flip
+})
+
 </script>
 
 <style scoped>
 .iris-flipcard{
+    margin-left: 2px;
+    margin-right: 2px;
     position: relative;
     text-align: center;
     display: inline-block;
