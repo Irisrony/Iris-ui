@@ -1,17 +1,57 @@
 <template>
     <div class="iris-flipcard">
-        <div class="flipcard-item card1">{{ num2 }}</div>
-        <div class="flipcard-item card2">{{ num2 }}</div>
-        <div class="flipcard-item card3">{{ num1 }}</div>
-        <div class="flipcard-item card4">{{ num1 }}</div>
+        <div class="flipcard-item card1"></div>
+        <div class="flipcard-item card2"></div>
+        <div class="flipcard-item card3">{{ props.num }}</div>
+        <div class="flipcard-item card4">{{ props.num }}</div>
+    </div>
+    <div class="btnController">
+        <button id="btnUp">向上翻转</button>
+        <button id="btnDown" @click="flipDown">向下翻转</button>
     </div>
 </template>
 
 <script setup lang='ts'>
 import { ref } from 'vue';
 
-const num1 = ref(0)
-const num2 = ref(1)
+
+type TData = {
+    num: number
+}
+
+const props = withDefaults(defineProps<TData>(),{
+    num: 0
+})
+
+const isFlipping = ref(false)
+
+const flipDown = () => {
+    if(isFlipping.value){
+        return
+    }
+    const card1 = document.querySelector('.card1')
+    const card2 = document.querySelector('.card2')
+    const card3 = document.querySelector('.card3')
+    const card4 = document.querySelector('.card4')
+
+    const  curNum = Number.parseInt(card3!.innerHTML)
+    const  nextNum = (curNum + 9) % 10
+    card1!.innerHTML = card2!.innerHTML = "" + nextNum
+
+    card2!.setAttribute('class','flipcard-item card2 card2FlipUp')
+    card3!.setAttribute('class','flipcard-item card3 card3FlipUp')
+
+    isFlipping.value = true
+
+    setTimeout(()=>{
+        card2!.setAttribute('class','flipcard-item card2')
+        card3!.setAttribute('class','flipcard-item card3')
+        card4!.innerHTML = card3!.innerHTML = "" + nextNum
+        card1!.innerHTML = card2!.innerHTML = "" + ((nextNum + 9) % 10)
+        isFlipping.value = false
+    },600)
+    
+}
 
 </script>
 
@@ -71,12 +111,32 @@ const num2 = ref(1)
     z-index: 2;
 }
 
-.iris-flipcard:hover .card2 {
-    transform: rotateX(0);
+.card2FlipUp{
+    animation: card2FlipUp 0.6s ease-in-out both;
 }
 
-.iris-flipcard:hover .card3 {
-    transform: rotateX(-180deg);
+.card3FlipUp{
+    animation: card3FlipUp 0.6s ease-in-out both;
+}
+
+@keyframes card2FlipUp{
+    0% {
+        transform: rotateX(180deg);
+    }
+
+    100% {
+        transform: rotateX(0);
+    }
+}
+
+@keyframes card3FlipUp{
+    0% {
+        transform: rotateX(0);
+    }
+
+    100% {
+        transform: rotateX(-180deg);
+    }
 }
 
 </style>
