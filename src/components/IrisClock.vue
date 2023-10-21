@@ -1,13 +1,35 @@
 <template>
     <div class="iris-clock">
-        <IrisFlipCard :num="date[0]" ref="h1"></IrisFlipCard>
-        <IrisFlipCard :num="date[1]" ref="h2"></IrisFlipCard>
+        <div class="cards-container">
+            <div class="cards-content">
+                <IrisFlipCard :num="date[0]" ref="h1"></IrisFlipCard>
+                <IrisFlipCard :num="date[1]" ref="h2"></IrisFlipCard>
+            </div>
+            <div class="cards-description">
+                <span>hour</span>
+            </div>
+        </div>
         <em>:</em>
-        <IrisFlipCard :num="date[2]" ref="m1"></IrisFlipCard>
-        <IrisFlipCard :num="date[3]" ref="m2"></IrisFlipCard>
+        <div class="cards-container">
+            <div class="cards-content">
+                <IrisFlipCard :num="date[2]" ref="m1"></IrisFlipCard>
+                <IrisFlipCard :num="date[3]" ref="m2"></IrisFlipCard>
+            </div>
+            <div class="cards-description">
+                <span>minutes</span>
+            </div>
+        </div>
         <em>:</em>
-        <IrisFlipCard :num="date[4]" ref="s1"></IrisFlipCard>
-        <IrisFlipCard :num="date[5]" ref="s2"></IrisFlipCard>
+        <div class="cards-container">
+            <div class="cards-content">
+                <IrisFlipCard :num="date[4]" ref="s1"></IrisFlipCard>
+                <IrisFlipCard :num="date[5]" ref="s2"></IrisFlipCard>
+            </div>
+            <div class="cards-description">
+                <span>seconds</span>
+            </div>
+        </div>
+        
     </div>
 </template>
 
@@ -100,9 +122,33 @@ onMounted(() => {
     text-align: center;
 }
 .iris-clock em{
+    margin-bottom: 35px;
     padding: 2px 2px;
     font-size: 66px;
     font-style: normal;
 }
+
+.cards-container{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+.cards-content{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+.cards-description span{
+    background-color: #888;
+    border-radius: 5px;
+    padding: 0 5px;
+}
+
 
 </style>
