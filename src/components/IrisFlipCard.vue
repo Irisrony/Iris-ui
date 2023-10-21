@@ -6,26 +6,27 @@
         <div class="flipcard-item card4">{{ props.num }}</div>
     </div>
     <div class="btnController">
-        <button id="btnUp">向上翻转</button>
-        <button id="btnDown" @click="flipDown">向下翻转</button>
+        <button id="btnUp" @click="flip(1)">向上翻转</button>
+        <button id="btnDown" @click="flip(-1)">向下翻转</button>
     </div>
 </template>
 
 <script setup lang='ts'>
 import { ref } from 'vue';
 
-
 type TData = {
-    num: number
+    num?: number
+    duration?: number
 }
 
 const props = withDefaults(defineProps<TData>(),{
-    num: 0
+    num: 9,
+    duration: 600
 })
 
 const isFlipping = ref(false)
 
-const flipDown = () => {
+const flip = (direction : number) => {
     if(isFlipping.value){
         return
     }
@@ -34,22 +35,25 @@ const flipDown = () => {
     const card3 = document.querySelector('.card3')
     const card4 = document.querySelector('.card4')
 
+    // 设置底下的数字
     const  curNum = Number.parseInt(card3!.innerHTML)
-    const  nextNum = (curNum + 9) % 10
+    const  nextNum = (curNum + direction + 10) % 10
     card1!.innerHTML = card2!.innerHTML = "" + nextNum
 
+    // 设置动画
     card2!.setAttribute('class','flipcard-item card2 card2FlipUp')
     card3!.setAttribute('class','flipcard-item card3 card3FlipUp')
 
     isFlipping.value = true
 
     setTimeout(()=>{
+        // 清除动画
         card2!.setAttribute('class','flipcard-item card2')
         card3!.setAttribute('class','flipcard-item card3')
+        // 更新顶部的数字
         card4!.innerHTML = card3!.innerHTML = "" + nextNum
-        card1!.innerHTML = card2!.innerHTML = "" + ((nextNum + 9) % 10)
         isFlipping.value = false
-    },600)
+    },props.duration)
     
 }
 
