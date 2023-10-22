@@ -54,6 +54,8 @@ const m2 = ref()
 const s1 = ref()
 const s2 = ref()
 
+const cards = [h1,h2,m1,m2,s1,s2]
+
 const flip = (el :Ref<any>, curNum: string,nextNum: string) => {
     if(curNum !== nextNum && el.value.flip){
         el.value.flip(nextNum)
@@ -72,12 +74,9 @@ const run = () => {
         const now = new Date()
         const nowTimeStr = formatDate(new Date(now.getTime() - 1000),'hhiiss')
         const nextTimeStr = formatDate(now,'hhiiss')
-        flip(h1,nowTimeStr[0],nextTimeStr[0])
-        flip(h2,nowTimeStr[1],nextTimeStr[1])
-        flip(m1,nowTimeStr[2],nextTimeStr[2])
-        flip(m2,nowTimeStr[3],nextTimeStr[3])
-        flip(s1,nowTimeStr[4],nextTimeStr[4])
-        flip(s2,nowTimeStr[5],nextTimeStr[5])
+        for(let i = 0;i<cards.length;++i){
+            flip(cards[i],nowTimeStr[i],nextTimeStr[i])
+        }
     }, 1000)
 }
 
