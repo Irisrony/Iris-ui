@@ -34,7 +34,7 @@
 </template>
 
 <script setup lang='ts'>
-import { Ref, onMounted, ref } from 'vue';
+import { Ref, onMounted, onUnmounted, ref } from 'vue';
 import IrisFlipCard from './IrisFlipCard.vue';
 import {formatDate} from '../utils/TimeFormatter'
 
@@ -56,6 +56,8 @@ const s2 = ref()
 
 const cards = [h1,h2,m1,m2,s1,s2]
 
+let timer : null | number = null
+
 const flip = (el :Ref<any>, curNum: string,nextNum: string) => {
     if(curNum !== nextNum && el.value.flip){
         el.value.flip(nextNum)
@@ -70,7 +72,7 @@ const init = () => {
 
 const run = () => {
     
-    setInterval(() => {        
+    timer = setInterval(() => {        
         const now = new Date()
         const nowTimeStr = formatDate(new Date(now.getTime() - 1000),'hhiiss')
         const nextTimeStr = formatDate(now,'hhiiss')
@@ -83,6 +85,13 @@ const run = () => {
 onMounted(() => {
     init()
     run()
+})
+
+onUnmounted(() => {
+    if(timer){
+        clearInterval(timer)
+        timer = null
+    }
 })
 
 </script>

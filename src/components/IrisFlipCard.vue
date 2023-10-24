@@ -8,7 +8,7 @@
 </template>
 
 <script setup lang='ts'>
-import { ref } from 'vue';
+import { onUnmounted, ref } from 'vue';
 
 type TData = {
     num?: number
@@ -26,6 +26,8 @@ const card1 = ref()
 const card2 = ref()
 const card3 = ref()
 const card4 = ref()
+
+let timer : null | number = null
 
 const setFrontNum = (num: number) => {
     card4!.value.innerHTML = card3!.value.innerHTML = "" + num
@@ -46,7 +48,7 @@ const flip = (nextNum: number) => {
 
     isFlipping.value = true
 
-    setTimeout(()=>{
+    timer = setTimeout(()=>{
         // 清除动画
         card2!.value.setAttribute('class','flipcard-item card2')
         card3!.value.setAttribute('class','flipcard-item card3')
@@ -59,6 +61,13 @@ const flip = (nextNum: number) => {
 
 defineExpose({
     flip
+})
+
+onUnmounted(() => {
+    if(timer)[
+        clearTimeout(timer),
+        timer = null
+    ]
 })
 
 </script>
