@@ -86,5 +86,10 @@ onUnmounted(() => {
 <style scoped>
 .container{
     background-color: #000;
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    height: 100vh;
+    align-items: center;
 }
 </style>
